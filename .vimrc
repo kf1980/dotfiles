@@ -66,6 +66,7 @@ NeoBundleLazy 'junegunn/vim-easy-align', {
 	\ }
 \ }
 NeoBundle 'glidenote/memolist.vim'
+NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'LeafCage/yankround.vim'
 NeoBundle 'itchyny/lightline.vim'
