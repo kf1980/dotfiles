@@ -13,57 +13,57 @@ endif
 call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/vimproc', {
-	\ 'build': {
-		\ 'windows' : 'make -f make_mingw32.mak',
-		\ 'cygwin'  : 'make -f make_cygwin.mak',
-		\ 'mac'     : 'make -f make_mac.mak',
-		\ 'unix'    : 'make -f make_unix.mak'
-	\ }
+\	 'build': {
+\		 'windows' : 'make -f make_mingw32.mak',
+\		 'cygwin'  : 'make -f make_cygwin.mak',
+\		 'mac'     : 'make -f make_mac.mak',
+\		 'unix'    : 'make -f make_unix.mak'
+\	 }
 \ }
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru.vim', {
-	\ 'depends' : 'Shougo/unite.vim'
+\	 'depends' : 'Shougo/unite.vim'
 \ }
 NeoBundleLazy 'Shougo/vimfiler.vim', {
-	\ 'depends'  : 'Shougo/unite.vim',
-	\ 'autoload' : {
-		\ 'commands' : [ 'VimFilerTab', 'VimFiler', 'VimFilerExplorer', 'VimFilerBufferDir' ] ,
-		\ 'mappings' : '<Plug>(vimfiler_switch)' ,
-		\ 'explorer' : 1
-	\ }
+\	 'depends'  : 'Shougo/unite.vim',
+\	 'autoload' : {
+\		 'commands' : [ 'VimFilerTab', 'VimFiler', 'VimFilerExplorer', 'VimFilerBufferDir' ] ,
+\		 'mappings' : '<Plug>(vimfiler_switch)' ,
+\		 'explorer' : 1
+\	 }
 \ }
 NeoBundleLazy 'Shougo/neocomplete.vim', {
-	\ 'depends'  : 'Shougo/vimproc',
-	\ 'autoload' : {
-		\ 'insert' : 1
-	\ }
+\	 'depends'  : 'Shougo/vimproc',
+\	 'autoload' : {
+\		 'insert' : 1
+\	 }
 \ }
 NeoBundleLazy 'Shougo/vimshell', {
-	\ 'depends'  : 'Shougo/vimproc',
-	\ 'autoload' : {
-		\ 'commands' : [
-			\ { 'name' : 'VimShell', 'complete' : 'customlist,vimshell#complete' },
-			\ 'VimShellExecute',
-			\ 'VimShellInteractive',
-			\ 'VimShellTerminal',
-			\ 'VimShellPop'
-		\ ],
-		\ 'mappings' : '<Plug>(vimshell_switch)'
-	\ }
+\	 'depends'  : 'Shougo/vimproc',
+\	 'autoload' : {
+\		 'commands' : [
+\			 { 'name' : 'VimShell', 'complete' : 'customlist,vimshell#complete' },
+\			 'VimShellExecute',
+\			 'VimShellInteractive',
+\			 'VimShellTerminal',
+\			 'VimShellPop'
+\		 ],
+\		 'mappings' : '<Plug>(vimshell_switch)'
+\	 }
 \ }
 NeoBundle 'Townk/vim-autoclose'
 NeoBundleLazy 'thinca/vim-quickrun', {
-	\ 'autoload' : {
-		\ 'mappings' : [['n'],['\r']],
-		\ 'commands' : 'QuickRun'
-	\ }
+\	 'autoload' : {
+\		 'mappings' : [['n'],['\r']],
+\		 'commands' : 'QuickRun'
+\	 }
 \ }
 NeoBundle 'tyru/caw.vim.git'
 NeoBundleLazy 'junegunn/vim-easy-align', {
-	\ 'autoload' : {
-		\ 'command'  : 'EasyAlign',
-		\ 'mappings' : '<Plug>(EasyAlign)'
-	\ }
+\	 'autoload' : {
+\		 'command'  : 'EasyAlign',
+\		 'mappings' : '<Plug>(EasyAlign)'
+\	 }
 \ }
 NeoBundle 'glidenote/memolist.vim'
 NeoBundle 'tpope/vim-fugitive'
@@ -137,6 +137,8 @@ set ignorecase
 set smartcase
 set incsearch
 set hlsearch
+
+
 " }}}
 
 " vim-easy-align {{{
@@ -160,38 +162,38 @@ let g:neocomplete#lock_buffer_name_pattern        = '\*ku\*'
 " QuickRun {{{
 nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 let g:quickrun_config = {
-	\ '_' : {
-		\ 'runner'                          : 'vimproc',
-		\ 'runner/vimproc/updatetime'       : 100,
-		\ 'outputter'                       : 'multi:buffer:quickfix',
-		\ 'outputter/buffer/split'          : ':botright 8sp',
-		\ 'outputter/buffer/close_on_empty' : 1,
-		\ 'outputter/error/success'         : 'buffer',
-		\ 'outputter/error/error'           : 'quickfix',
-		\ 'hook/time/enable'                : 1
-	\ }
+\ '_' : {
+\		 'runner'                          : 'vimproc',
+\		 'runner/vimproc/updatetime'       : 100,
+\		 'outputter'                       : 'multi:buffer:quickfix',
+\		 'outputter/buffer/split'          : ':botright 8sp',
+\		 'outputter/buffer/close_on_empty' : 1,
+\		 'outputter/error/success'         : 'buffer',
+\		 'outputter/error/error'           : 'quickfix',
+\		 'hook/time/enable'                : 1
+\	 }
 \ }
 " }}}
 
 " Lightline {{{
 let g:lightline = {
-	\ 'colorscheme' : 'jellybeans',
-	\ 'active'      : {
-		\ 'left'  : [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
-		\ 'right' : [ [ 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
-	\ },
-	\ 'component_function' : {
-		\ 'fugitive'     : 'MyFugitive',
-		\ 'filename'     : 'MyFilename',
-		\ 'fileformat'   : 'MyFileformat',
-		\ 'filetype'     : 'MyFiletype',
-		\ 'fileencoding' : 'MyFileencoding',
-		\ 'mode'         : 'MyMode'
-	\ },
-	\ 'subseparator' : {
-		\ 'left'         : '|',
-		\ 'right'        : '|'
-	\ }
+\	 'colorscheme' : 'jellybeans',
+\	 'active'      : {
+\		'left'  : [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
+\		 'right' : [ [ 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
+\	 },
+\	 'component_function' : {
+\		 'fugitive'     : 'MyFugitive',
+\		 'filename'     : 'MyFilename',
+\		 'fileformat'   : 'MyFileformat',
+\		 'filetype'     : 'MyFiletype',
+\		 'fileencoding' : 'MyFileencoding',
+\		 'mode'         : 'MyMode'
+\	 },
+\	 'subseparator' : {
+\		 'left'         : '|',
+\		 'right'        : '|'
+\	 }
 \ }
 
 function! MyModified()
@@ -205,11 +207,11 @@ endfunction
 function! MyFilename()
 	let fname = expand('%:t')
 	return &ft == 'vimfiler'   ? vimfiler#get_status_string() :
-		\  &ft == 'unite'      ? unite#get_status_string() :
-		\  &ft == 'vimshell'   ? vimshell#get_status_string() :
-		\  ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
-		\  ('' != fname        ? fname : '[No Name]') .
-		\  ('' != MyModified() ? ' ' . MyModified() : '')
+\			 &ft == 'unite'      ? unite#get_status_string() :
+\			 &ft == 'vimshell'   ? vimshell#get_status_string() :
+\			 ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+\			 ('' != fname        ? fname : '[No Name]') .
+\			 ('' != MyModified() ? ' ' . MyModified() : '')
 endfunction
 
 function! MyFugitive()
@@ -239,9 +241,9 @@ endfunction
 function! MyMode()
 	let fname = expand('%:t')
 	return &ft == 'unite' ? 'Unite' :
-		\  &ft == 'vimfiler' ? 'VimFiler' :
-		\  &ft == 'vimshell' ? 'VimShell' :
-		\  winwidth(0) > 60 ? lightline#mode() : ''
+\			 &ft == 'vimfiler' ? 'VimFiler' :
+\			 &ft == 'vimshell' ? 'VimShell' :
+\			 winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 " }}}
 
