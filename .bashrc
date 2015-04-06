@@ -5,6 +5,8 @@ if [ -f /etc/bashrc ]; then
 	source /etc/bashrc
 fi
 
+export PATH=/usr/local/bin:$PATH:$HOME/bin
+
 ### set aliases
 alias ls='ls -FG'
 alias la='ls -A'

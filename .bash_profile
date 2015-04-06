@@ -13,7 +13,6 @@ if which pyenv > /dev/null; then
 fi
 
 ## env
-export PATH=$PATH:$HOME/bin
 export HISTCONTROL=ignoreboth:erasedups
 export HISTIGNORE=pwd:ls:cd:la:ll:lla:history:clear:vim
 export HISTFILESIZE=10000
