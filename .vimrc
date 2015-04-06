@@ -356,6 +356,11 @@ nnoremap	<Space>sh zM
 nnoremap	<Space>sl zR
 
 inoremap	<silent> jj <ESC>
+inoremap	<C-d> <Delete>
+inoremap	<C-j> <Down>
+inoremap	<C-k> <Up>
+inoremap	<C-h> <Left>
+inoremap	<C-l> <Right>
 
 vnoremap	j gj
 vnoremap	k gk
@@ -363,4 +368,7 @@ vnoremap	gj j
 vnoremap	gk k
 vnoremap	<Tab> %
 vnoremap	v $h
+
+cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
+cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 " }}}
