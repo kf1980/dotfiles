@@ -314,7 +314,6 @@ nnoremap	<silent> [toggle]l :setlocal list!<CR>:setlocal list?<CR>
 nnoremap	<silent> [toggle]n :setlocal number!<CR>:setlocal number?<CR>
 nnoremap	<silent> [toggle]w :setlocal wrap!<CR>:setlocal wrap?<CR>
 nnoremap	<silent> [toggle]e :<C-u>VimFilerBufferDir -split -simple -winwidth=30 -no-quit -toggle<CR>
-" nnoremap	<silent> [toggle]f :setlocal 
 " }}}
 
 
