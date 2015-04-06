@@ -1,4 +1,6 @@
-" TODO: Use QuickRun
+" TODO: learn about QuickRun
+" TODO: use [memo] in memolist section
+" TODO: modify indent at some key maps
 
 set nocompatible
 
@@ -125,7 +127,6 @@ set tabstop=4
 set shiftwidth=4
 set shiftround
 set nosmartindent
-" set foldmethod=marker
 
 " Brackets
 set showmatch
@@ -179,7 +180,7 @@ let g:quickrun_config = {
 let g:lightline = {
 \	 'colorscheme' : 'jellybeans',
 \	 'active'      : {
-\		'left'  : [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
+\		 'left'  : [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
 \		 'right' : [ [ 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
 \	 },
 \	 'component_function' : {
@@ -206,7 +207,7 @@ endfunction
 
 function! MyFilename()
 	let fname = expand('%:t')
-	return &ft == 'vimfiler'   ? vimfiler#get_status_string() :
+	return   &ft == 'vimfiler'   ? vimfiler#get_status_string() :
 \			 &ft == 'unite'      ? unite#get_status_string() :
 \			 &ft == 'vimshell'   ? vimshell#get_status_string() :
 \			 ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
@@ -240,7 +241,7 @@ endfunction
 
 function! MyMode()
 	let fname = expand('%:t')
-	return &ft == 'unite' ? 'Unite' :
+	return   &ft == 'unite'    ? 'Unite' :
 \			 &ft == 'vimfiler' ? 'VimFiler' :
 \			 &ft == 'vimshell' ? 'VimShell' :
 \			 winwidth(0) > 60 ? lightline#mode() : ''
@@ -352,8 +353,6 @@ nnoremap	sv :<C-u>vsplit<CR>
 nnoremap	sq :<C-u>quit<CR>
 nnoremap	sQ :<C-u>bdelete<CR>
 nnoremap	<C-h> :<C-u>help<Space><C-r><C-w><CR>
-nnoremap	<Space>sh zM
-nnoremap	<Space>sl zR
 
 inoremap	<silent> jj <ESC>
 inoremap	<C-d> <Delete>
