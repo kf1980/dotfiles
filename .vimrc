@@ -1,10 +1,10 @@
 " TODO: learn about QuickRun
-" TODO: use [memo] in memolist section
-" TODO: modify indent at some key maps
 
-set nocompatible
+set filetype off
+if &compatible
+	set nocompatible
+endif
 
-" NeoBundle {{{
 if has('vim_starting')
 	if !isdirectory(expand('~/.vim/bundle/neobundle.vim/'))
 		:call system('git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim')
@@ -12,6 +12,7 @@ if has('vim_starting')
 	set runtimepath+=~/.vim/bundle/neobundle.vim
 endif
 
+" NeoBundle {{{
 call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/vimproc', {
@@ -72,8 +73,10 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'LeafCage/yankround.vim'
 NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'vim-jp/vimdoc-ja'
-NeoBundle 'ujihisa/unite-colorscheme'
+NeoBundleLazy 'vim-jp/vimdoc-ja', {
+\	'filetype' : 'help'
+\ }
+NeoBundleLazy 'ujihisa/unite-colorscheme'
 NeoBundle 'nanotech/jellybeans.vim'
 NeoBundle 'w0ng/vim-hybrid'
 NeoBundleCheck
@@ -109,8 +112,10 @@ set noerrorbells
 set backspace=indent,eol,start
 set noshowmode
 set clipboard=unnamed,autoselect
+set encoding=utf-8
+set t_Co=256
 
-" Window
+" View
 set number
 set numberwidth=5
 set ruler
@@ -161,7 +166,7 @@ let g:neocomplete#lock_buffer_name_pattern        = '\*ku\*'
 " }}}
 
 " QuickRun {{{
-nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
+nnoremap	<expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 let g:quickrun_config = {
 \ '_' : {
 \		 'runner'                          : 'vimproc',
@@ -262,8 +267,10 @@ nnoremap	<silent> [unite]p :<C-u>Unite yankround<CR>
 " }}}
 
 " Caw {{{
-nmap		<Space>c <Plug>(caw:i:toggle)
-vmap		<Space>c <Plug>(caw:i:toggle)
+nnoremap	[caw] <Nop>
+nmap		<Space>c [caw]
+nmap		[caw] <Plug>(caw:i:toggle)
+vmap		[caw] <Plug>(caw:i:toggle)
 " }}}
 
 " VimFiler {{{
@@ -281,8 +288,8 @@ let g:vimfiler_enable_auto_cd             = 1
 " }}}
 
 " VimShell {{{
-nnoremap <silent> vs :<C-u>VimShell<CR>
-nnoremap <silent> vp :<C-u>VimShellPop<CR>
+nnoremap	<silent> vs :<C-u>VimShell<CR>
+nnoremap	<silent> vp :<C-u>VimShellPop<CR>
 " }}}
 
 " YankRound {{{
@@ -307,8 +314,10 @@ let g:memolist_unite                = 1
 let g:memolist_unite_option         = '-auto-preview -start-insert'
 let g:memolist_unite_source         = 'file_rec'
 let g:memolist_filename_prefix_none = 1
-nnoremap <Space>mn  :MemoNew<CR>
-nnoremap <Space>ml  :MemoList<CR>
+nnoremap [memo] <Nop>
+nmap		<Space>m [memo]
+nnoremap	[memo]n  :MemoNew<CR>
+nnoremap	[memo]l  :MemoList<CR>
 " }}}
 
 " Toggle options {{{

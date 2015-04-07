@@ -14,7 +14,8 @@ fi
 
 ## env
 export HISTCONTROL=ignoreboth:erasedups
-export HISTIGNORE=pwd:ls:cd:la:ll:lla:history:clear:vim
+export HISTIGNORE=pwd:ls:cd:la:ll:lla:history:clear:vim:vi:cd??:cd???
+export HISTTIMEFORMAT='%Y-%m-%d_%T '
 export HISTFILESIZE=10000
 export HISTSIZE=10000
 export PS1="\[\e[32;1m\]\u@\[\e[34;1m\]\h:\W\\$ \[\e[0m\]"
