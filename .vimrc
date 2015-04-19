@@ -1,13 +1,20 @@
 " TODO: learn about QuickRun
 
-set filetype off
+augroup MyAutoCmd
+	autocmd!
+augroup END
+
+filetype off
+filetype plugin indent off
+
 if &compatible
 	set nocompatible
 endif
 
 if has('vim_starting')
 	if !isdirectory(expand('~/.vim/bundle/neobundle.vim/'))
-		:call system('git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim')
+		:call system('git clone git://github.com:Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim')
+"		:call system('git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim')
 	endif
 	set runtimepath+=~/.vim/bundle/neobundle.vim
 endif
@@ -23,7 +30,11 @@ NeoBundle 'Shougo/vimproc', {
 \		 'unix'    : 'make -f make_unix.mak'
 \	 }
 \ }
-NeoBundle 'Shougo/unite.vim'
+NeoBundleLazy 'Shougo/unite.vim', {
+\	 'autoload': {
+\		'commands' : ['Unite', 'UniteWithBufferDir']
+\	 }
+\ }
 NeoBundle 'Shougo/neomru.vim', {
 \	 'depends' : 'Shougo/unite.vim'
 \ }
@@ -35,12 +46,14 @@ NeoBundleLazy 'Shougo/vimfiler.vim', {
 \		 'explorer' : 1
 \	 }
 \ }
-NeoBundleLazy 'Shougo/neocomplete.vim', {
+NeoBundle 'Shougo/neocomplete.vim', {
 \	 'depends'  : 'Shougo/vimproc',
 \	 'autoload' : {
 \		 'insert' : 1
 \	 }
 \ }
+
+" VimShell {{{
 NeoBundleLazy 'Shougo/vimshell', {
 \	 'depends'  : 'Shougo/vimproc',
 \	 'autoload' : {
@@ -54,22 +67,77 @@ NeoBundleLazy 'Shougo/vimshell', {
 \		 'mappings' : '<Plug>(vimshell_switch)'
 \	 }
 \ }
-NeoBundle 'Townk/vim-autoclose'
-NeoBundleLazy 'thinca/vim-quickrun', {
-\	 'autoload' : {
-\		 'mappings' : [['n'],['\r']],
-\		 'commands' : 'QuickRun'
+nnoremap	<silent> vs :<C-u>VimShell<CR>
+nnoremap	<silent> vp :<C-u>VimShellPop<CR>
+" }}}
+
+" QuickRun {{{
+NeoBundle 'thinca/vim-quickrun'
+nmap <Leader>r <Plug>(quickrun)
+nnoremap	<expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
+let g:quickrun_config = {
+\ '_' : {
+\		 'runner'                          : 'vimproc',
+\		 'runner/vimproc/updatetime'       : 100,
+\		 'outputter'                       : 'multi:buffer:quickfix',
+\		 'outputter/buffer/split'          : ':botright 8sp',
+\		 'outputter/buffer/close_on_empty' : 1,
+\		 'outputter/error/success'         : 'buffer',
+\		 'outputter/error/error'           : 'quickfix',
+\		 'hook/time/enable'                : 1
 \	 }
 \ }
+" }}}
+
+" Caw {{{
 NeoBundle 'tyru/caw.vim.git'
+nmap <Leader>c <Plug>(caw:i:toggle)
+vmap <Leader>c <Plug>(caw:i:toggle)
+" }}}
+
 NeoBundleLazy 'junegunn/vim-easy-align', {
 \	 'autoload' : {
 \		 'command'  : 'EasyAlign',
 \		 'mappings' : '<Plug>(EasyAlign)'
 \	 }
 \ }
+
+NeoBundleLazy 'davidhalter/jedi-vim', {
+\	 'autoload' : {
+\		 'filetypes' : [ 'python', 'python3' ]
+\	 },
+\	 'build' : {
+\		'mac'  : 'pip install jedi',
+\		'unix' : 'pip install jedi'
+\	 }
+\ }
+let s:hooks = neobundle#get_hooks('jedi-vim')
+function! s:hooks.on_source(bundle)
+	let g:jedi#auto_vim_configuration = 0
+	let g:jedi#popup_select_first = 0
+	let g:jedi#rename_command = '<Leader>R'
+endfunction
+autocmd FileType python setlocal omnifunc=jedi#completions
+autocmd FileType python setlocal completeopt-=preview
+let g:jedi#auto_vim_configuration = 0
+if !exists('g:neocomplete#force_omni_input_patterns')
+        let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^. \t]\.\w*'
+
 NeoBundle 'glidenote/memolist.vim'
 NeoBundle 'tpope/vim-fugitive'
+NeoBundleLazy 'mattn/gist-vim', {
+\	 'depends': 'mattn/webapi-vim',
+\	 'autoload' : {
+\		 'commands' : 'Gist'
+\		 }
+\ }
+NeoBundleLazy 'mattn/webapi-vim', {
+\	 'autoload' : {
+\		 'function_prefix': 'webapi'
+\	 }
+\ }
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'LeafCage/yankround.vim'
 NeoBundle 'itchyny/lightline.vim'
@@ -99,6 +167,8 @@ filetype plugin indent on
 syntax enable
 colorscheme jellybeans
 
+autocmd MyAutoCmd QuickfixCmdPost make,grep,grepadd,vimgrep,python,python3 copen
+autocmd MyAutoCmd FileType help,qf nnoremap <buffer> q <C-w>c
 
 " Global Settings {{{
 " Misc
@@ -114,6 +184,7 @@ set noshowmode
 set clipboard=unnamed,autoselect
 set encoding=utf-8
 set t_Co=256
+set mouse=a
 
 " View
 set number
@@ -165,21 +236,6 @@ let g:neocomplete#enable_fuzzy_completion         = 1
 let g:neocomplete#lock_buffer_name_pattern        = '\*ku\*'
 " }}}
 
-" QuickRun {{{
-nnoremap	<expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
-let g:quickrun_config = {
-\ '_' : {
-\		 'runner'                          : 'vimproc',
-\		 'runner/vimproc/updatetime'       : 100,
-\		 'outputter'                       : 'multi:buffer:quickfix',
-\		 'outputter/buffer/split'          : ':botright 8sp',
-\		 'outputter/buffer/close_on_empty' : 1,
-\		 'outputter/error/success'         : 'buffer',
-\		 'outputter/error/error'           : 'quickfix',
-\		 'hook/time/enable'                : 1
-\	 }
-\ }
-" }}}
 
 " Lightline {{{
 let g:lightline = {
@@ -254,7 +310,7 @@ endfunction
 " }}}
 
 " Unite {{{
-let g:unite_enable_start_insert        = 0	" 0:disable 1:enable
+let g:unite_enable_start_insert        = 0
 let g:unite_force_overwrite_statusline = 0
 nnoremap	[unite] <Nop>
 nmap		<Space>u [unite]
@@ -266,12 +322,6 @@ nnoremap	<silent> [unite]a :<C-u>UniteBookmarkAdd<CR>
 nnoremap	<silent> [unite]p :<C-u>Unite yankround<CR>
 " }}}
 
-" Caw {{{
-nnoremap	[caw] <Nop>
-nmap		<Space>c [caw]
-nmap		[caw] <Plug>(caw:i:toggle)
-vmap		[caw] <Plug>(caw:i:toggle)
-" }}}
 
 " VimFiler {{{
 let g:vimfiler_as_default_explorer        = 1	" 0:disable 1:enable
@@ -287,10 +337,6 @@ let g:vimfiler_ignore_pattern             = '^\%(\.git\|\.DS_Store\)$'
 let g:vimfiler_enable_auto_cd             = 1
 " }}}
 
-" VimShell {{{
-nnoremap	<silent> vs :<C-u>VimShell<CR>
-nnoremap	<silent> vp :<C-u>VimShellPop<CR>
-" }}}
 
 " YankRound {{{
 let g:yankround_max_history = 50
@@ -314,7 +360,7 @@ let g:memolist_unite                = 1
 let g:memolist_unite_option         = '-auto-preview -start-insert'
 let g:memolist_unite_source         = 'file_rec'
 let g:memolist_filename_prefix_none = 1
-nnoremap [memo] <Nop>
+nnoremap	[memo] <Nop>
 nmap		<Space>m [memo]
 nnoremap	[memo]n  :MemoNew<CR>
 nnoremap	[memo]l  :MemoList<CR>
@@ -333,6 +379,8 @@ nnoremap	<silent> [toggle]e :<C-u>VimFilerBufferDir -split -simple -winwidth=30 
 " Key Mapping {{{
 nnoremap	j gj
 nnoremap	k gk
+nnoremap	J 5j
+nnoremap	K 5k
 nnoremap	gj j
 nnoremap	gk k
 nnoremap	G Gzz

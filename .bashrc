@@ -5,7 +5,7 @@ if [ -f /etc/bashrc ]; then
 	source /etc/bashrc
 fi
 
-export PATH=/usr/local/bin:$PATH:$HOME/bin
+export PATH=$PATH:$HOME/bin
 
 ### set aliases
 alias ls='ls -FG'
@@ -16,4 +16,5 @@ alias mkdir='mkdir -p'
 alias tree='tree -F -L 2'
 alias rm='rmtrash'
 alias lns='ln -s'
-
+alias py=python
+alias py3=python3

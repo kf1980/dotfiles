@@ -8,9 +8,9 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
 fi
 
 ## pyenv
-if which pyenv > /dev/null; then
-	eval "$(pyenv init -)";
-fi
+# if which pyenv > /dev/null; then
+# 	eval "$(pyenv init -)";
+# fi
 
 ## env
 export HISTCONTROL=ignoreboth:erasedups
