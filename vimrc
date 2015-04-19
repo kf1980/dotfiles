@@ -116,6 +116,7 @@ function! s:hooks.on_source(bundle)
 	let g:jedi#auto_vim_configuration = 0
 	let g:jedi#popup_select_first = 0
 	let g:jedi#rename_command = '<Leader>R'
+	let g:jedi#documentation_command = '<Leader>D'
 endfunction
 autocmd FileType python setlocal omnifunc=jedi#completions
 autocmd FileType python setlocal completeopt-=preview
@@ -127,17 +128,16 @@ let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^. \t]\.\w*'
 
 NeoBundle 'glidenote/memolist.vim'
 NeoBundle 'tpope/vim-fugitive'
-NeoBundleLazy 'mattn/gist-vim', {
-\	 'depends': 'mattn/webapi-vim',
-\	 'autoload' : {
-\		 'commands' : 'Gist'
-\		 }
-\ }
-NeoBundleLazy 'mattn/webapi-vim', {
-\	 'autoload' : {
-\		 'function_prefix': 'webapi'
+NeoBundleLazy 'lambdalisue/vim-gista', {
+\	 'autoload': {
+\		 'commands': ['Gista'],
+\		 'mappings': '<Plug>(gista-',
+\		 'unite_sources': 'gista'
 \	 }
 \ }
+let g:gista#update_on_write         = 1
+let g:gista#interactive_description = 0
+NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'LeafCage/yankround.vim'
 NeoBundle 'itchyny/lightline.vim'
@@ -161,6 +161,8 @@ let g:neocomplete#data_directory   = expand('~/.vim/etc/neocomplete')
 let g:yankround_dir                = expand('~/.vim/etc/yankround')
 let g:memolist_template_dir_path   = expand('~/.vim/etc/memolist/template')
 let g:memolist_path                = expand('~/Documents/_memo')
+let g:gista#directory              = expand('~/.vim/etc/gista/')
+let g:gista#token_directory        = expand('~/.vim/etc/gista/tokens')
 " }}}
 
 filetype plugin indent on
@@ -320,6 +322,7 @@ nnoremap	<silent> [unite]f :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
 nnoremap	<silent> [unite]c :<C-u>Unite bookmark<CR>
 nnoremap	<silent> [unite]a :<C-u>UniteBookmarkAdd<CR>
 nnoremap	<silent> [unite]p :<C-u>Unite yankround<CR>
+nnoremap	<silent> [unite]n :<C-u>Unite file/new<CR>
 " }}}
 
 
