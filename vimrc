@@ -144,6 +144,13 @@ NeoBundle 'itchyny/lightline.vim'
 NeoBundleLazy 'vim-jp/vimdoc-ja', {
 \	'filetype' : 'help'
 \ }
+NeoBundle 'nathanaelkane/vim-indent-guides'
+let g:indent_guides_enable_on_vim_startup=1
+let g:indent_guides_start_level=2
+let g:indent_guides_auto_colors=0
+let g:indent_guides_guide_size = 1
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=235 ctermbg=235
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=235 ctermbg=235
 NeoBundleLazy 'ujihisa/unite-colorscheme'
 NeoBundle 'nanotech/jellybeans.vim'
 NeoBundle 'w0ng/vim-hybrid'
@@ -376,6 +383,7 @@ nnoremap	<silent> [toggle]l :setlocal list!<CR>:setlocal list?<CR>
 nnoremap	<silent> [toggle]n :setlocal number!<CR>:setlocal number?<CR>
 nnoremap	<silent> [toggle]w :setlocal wrap!<CR>:setlocal wrap?<CR>
 nnoremap	<silent> [toggle]e :<C-u>VimFilerBufferDir -split -simple -winwidth=30 -no-quit -toggle<CR>
+nnoremap	<silent> [toggle]i :<C-u>IndentGuidesToggle<CR>
 " }}}
 
 
