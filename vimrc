@@ -11,10 +11,19 @@ if &compatible
 	set nocompatible
 endif
 
+if has('win16') || has('win32') || has('win64')
+	let delimiter = ';'
+else
+	let delimiter = ':'
+endif
+" let pathlist = split($PATH, delimiter)
+" if isdirectory(expand('~/.pyenv/shims')) && index(pathlist, expand('~/.pyenv/shims')) == -1
+" 	let $PATH = expand('~/.pyenv/shims').delimiter.$PATH
+" endif
+
 if has('vim_starting')
 	if !isdirectory(expand('~/.vim/bundle/neobundle.vim/'))
 		:call system('git clone git://github.com:Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim')
-"		:call system('git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim')
 	endif
 	set runtimepath+=~/.vim/bundle/neobundle.vim
 endif
@@ -95,6 +104,21 @@ nmap <Leader>c <Plug>(caw:i:toggle)
 vmap <Leader>c <Plug>(caw:i:toggle)
 " }}}
 
+
+NeoBundle 'scrooloose/syntastic'
+let g:syntastic_mode_map = {
+\	 'mode' : 'passive'
+\ }
+augroup MyAutoSyntastic
+	autocmd!
+	autocmd BufWritePost *.c,*.py,*.pl,*.rb call s:syntastic()
+augroup END
+function! s:syntastic()
+	SyntasticCheck
+	call lightline#update()
+endfunction
+
+
 NeoBundleLazy 'junegunn/vim-easy-align', {
 \	 'autoload' : {
 \		 'command'  : 'EasyAlign',
@@ -125,6 +149,14 @@ if !exists('g:neocomplete#force_omni_input_patterns')
         let g:neocomplete#force_omni_input_patterns = {}
 endif
 let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^. \t]\.\w*'
+
+" NeoBundleLazy 'lambdalisue/vim-pyenv', {
+" \	 'depends' : ['davidhalter/jedi-vim'],
+" \	 'autoload' : {
+" \		 'filetypes' : [ 'python', 'python3' ]
+" \	 }
+" \ }
+
 
 NeoBundle 'glidenote/memolist.vim'
 NeoBundle 'tpope/vim-fugitive'
@@ -250,8 +282,8 @@ let g:neocomplete#lock_buffer_name_pattern        = '\*ku\*'
 let g:lightline = {
 \	 'colorscheme' : 'jellybeans',
 \	 'active'      : {
-\		 'left'  : [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
-\		 'right' : [ [ 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
+\		 'left'  : [ [ 'mode', 'paste' ],  [ 'fugitive', 'filename' ] ],
+\		 'right' : [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
 \	 },
 \	 'component_function' : {
 \		 'fugitive'     : 'MyFugitive',
@@ -264,6 +296,12 @@ let g:lightline = {
 \	 'subseparator' : {
 \		 'left'         : '|',
 \		 'right'        : '|'
+\	 },
+\	 'component_expand' : {
+\		 'syntastic' : 'SyntasticStatuslineFlag'
+\	 },
+\	 'component_type' : {
+\		 'syntastic' : 'error'
 \	 }
 \ }
 

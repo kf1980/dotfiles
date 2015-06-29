@@ -1,0 +1,36 @@
+# Archive
+*.zip
+*.tar.gz
+*.tgz
+*.7z
+*.dmg
+*.tar
+*.bz2
+
+# Binary
+*.iso
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+
+# Mac
+.DS_Store
+.Trashes
+
+# version control system
+.git/
+
+# Misc
+*.tmp
+*.old
+.cache/
+

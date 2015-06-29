@@ -14,7 +14,4 @@ alias ll='ls -l'
 alias lla='ls -Al'
 alias mkdir='mkdir -p'
 alias tree='tree -F -L 2'
-alias rm='rmtrash'
 alias lns='ln -s'
-alias py=python
-alias py3=python3
