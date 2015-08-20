@@ -1,10 +1,9 @@
 # This is Git's per-user configuration file.
+[include]
+	path = .gitconfig.local
 [core]
-# Please adapt and uncomment the following lines:
-#	user  = kf1980
-#	email = kf1980@local
-	excludesfile = ~/.gitignore
 	editor = vim
+	excludesfile = ~/.gitignore
 	precomposeunicode = true
 
 [include]
@@ -22,7 +21,3 @@
 	co = checkout
 	st = status
 
-
-[user]
-	name  = kf1980
-	email = kf1980@local
