@@ -1,13 +1,10 @@
 # This is Git's per-user configuration file.
 [include]
-	path = .gitconfig.local
+	path = ~/.gitconfig.local
 [core]
 	editor = vim
 	excludesfile = ~/.gitignore
 	precomposeunicode = true
-
-[include]
-	path = ~/.gitconfig.local
 
 [color]
 	ui = auto
