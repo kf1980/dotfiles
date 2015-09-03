@@ -104,7 +104,6 @@ nmap <Leader>c <Plug>(caw:i:toggle)
 vmap <Leader>c <Plug>(caw:i:toggle)
 " }}}
 
-
 NeoBundle 'scrooloose/syntastic'
 let g:syntastic_mode_map = {
 \	 'mode' : 'passive'
@@ -157,6 +156,13 @@ let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^. \t]\.\w*'
 " \	 }
 " \ }
 
+NeoBundle "rcmdnk/vim-markdown"
+let g:vim_markdown_folding_disabled=1
+
+NeoBundle 'kannokanno/previm'
+let g:previm_open_cmd = 'open -a "Google Chrome"'
+let g:previm_enable_realtime = 1
+let g:previm_show_header = 0
 
 NeoBundle 'glidenote/memolist.vim'
 NeoBundle 'tpope/vim-fugitive'
@@ -214,9 +220,9 @@ autocmd MyAutoCmd FileType help,qf nnoremap <buffer> q <C-w>c
 " Global Settings {{{
 " Misc
 set hidden
-set nobackup
-set nowritebackup
-set noswapfile
+"set nobackup
+"set nowritebackup
+"set noswapfile
 set t_vb=
 set novisualbell
 set noerrorbells
